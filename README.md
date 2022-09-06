@@ -25,9 +25,9 @@
 In your terminal, run: 
 
 ```
-python3 -m venv env
+python3.8 -m venv venv
 
-source env/bin/activate
+source venv/bin/activate
 
 # check python version
 python --version
@@ -44,6 +44,10 @@ pip install -e .
 # first navigate to the package, then install using pip
 cd /Users/tabearober/Documents/Counterfactuals/packages/OptiCL 
 pip install .
+
+# install requirements
+cd /Users/tabearober/Documents/Counterfactuals/CE-OCL
+pip install -r requirements.txt
 
 # install jupyter
 pip install jupyter
