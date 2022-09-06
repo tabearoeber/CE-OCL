@@ -14,7 +14,9 @@
     ├── embed_mip.py    # addition to OptiCL that allows for enlarged data manifold region
     ├── CE-OCL Case Study.ipynb     # notebook to reproduce results of the case study (Section 4.1)
     ├── Evaluation CE-OCL.ipynb     # notebook to reproduce results of Section 4.2 (for CE-OCL)
+    ├── Evaluation DiCE.ipynb       # notebook to reproduce results of Section 4.2 (for DiCE)
     |   
+    ├── requiremsnts.txt
     └── README.md
 
 
