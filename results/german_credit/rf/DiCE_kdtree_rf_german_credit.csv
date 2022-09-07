@@ -1,0 +1,11 @@
+,checking_status,duration,credit_history,purpose,credit_amount,savings_status,employment,installment_commitment,personal_status,other_parties,residence_since,property_magnitude,age,other_payment_plans,housing,existing_credits,job,num_dependents,own_telephone,foreign_worker
+original,<0,48,existing paid,used car,10297,<100,4<=X<7,4,male single,none,4,no known property,39,stores,for free,3,skilled,2,yes,yes
+sol0,no checking,60.0,-,new car,10366.0,-,>=7,2.0,-,-,-,life insurance,42.0,none,own,1.0,high qualif/self emp/mgmt,1.0,-,
+original,<0,48,existing paid,used car,10297,<100,4<=X<7,4,male single,none,4,no known property,39,stores,for free,3,skilled,2,yes,yes
+sol0,-,36.0,critical/other existing credit,-,9629.0,-,-,-,-,-,-,car,24.0,none,own,2.0,-,1.0,-,
+sol1,no checking,36.0,critical/other existing credit,-,10477.0,no known savings,>=7,2.0,-,-,-,-,42.0,none,-,2.0,-,1.0,none,
+sol2,no checking,60.0,-,new car,10366.0,-,>=7,2.0,-,-,-,life insurance,42.0,none,own,1.0,high qualif/self emp/mgmt,1.0,-,
+original,<0,48,existing paid,used car,10297,<100,4<=X<7,4,male single,none,4,no known property,39,stores,for free,3,skilled,2,yes,yes
+sol0,-,36.0,critical/other existing credit,-,9629.0,-,-,-,-,-,-,car,24.0,none,own,2.0,-,1.0,-,
+sol1,no checking,36.0,critical/other existing credit,-,10477.0,no known savings,>=7,2.0,-,-,-,-,42.0,none,-,2.0,-,1.0,none,
+sol2,no checking,-,critical/other existing credit,-,8858.0,no known savings,-,2.0,-,-,1.0,-,35.0,none,-,2.0,-,1.0,-,

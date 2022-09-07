@@ -1,0 +1,11 @@
+,checking_status,duration,credit_history,purpose,credit_amount,savings_status,employment,installment_commitment,personal_status,other_parties,residence_since,property_magnitude,age,other_payment_plans,housing,existing_credits,job,num_dependents,own_telephone,foreign_worker
+original,<0,48,existing paid,used car,10297,<100,4<=X<7,4,male single,none,4,no known property,39,stores,for free,3,skilled,2,yes,yes
+sol0,-,34.0,-,-,-,-,-,2.0,-,-,-,-,-,-,-,-,-,-,-,-
+original,<0,48,existing paid,used car,10297,<100,4<=X<7,4,male single,none,4,no known property,39,stores,for free,3,skilled,2,yes,yes
+sol0,-,34.0,-,-,-,-,-,2.0,-,-,-,-,-,-,-,-,-,-,-,-
+sol1,-,34.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol2,-,-,-,-,-,-,-,-,-,-,-,-,60.0,-,-,-,-,-,-,no
+original,<0,48,existing paid,used car,10297,<100,4<=X<7,4,male single,none,4,no known property,39,stores,for free,3,skilled,2,yes,yes
+sol0,-,8.0,-,-,-,-,-,-,-,-,-,car,-,-,-,-,-,-,-,-
+sol1,-,15.0,all paid,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol2,-,-,-,-,-,-,-,-,-,-,-,life insurance,-,-,-,-,-,-,-,-

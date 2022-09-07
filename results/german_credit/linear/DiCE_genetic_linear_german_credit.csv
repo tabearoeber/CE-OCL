@@ -1,0 +1,11 @@
+,checking_status,duration,credit_history,purpose,credit_amount,savings_status,employment,installment_commitment,personal_status,other_parties,residence_since,property_magnitude,age,other_payment_plans,housing,existing_credits,job,num_dependents,own_telephone,foreign_worker
+original,<0,24,existing paid,new car,1371,no known savings,1<=X<4,4,female div/dep/mar,none,4,real estate,25,none,rent,1,skilled,1,none,yes
+sol0,no checking,9.0,-,furniture/equipment,1388.0,<100,-,-,-,-,2.0,-,26.0,-,-,-,-,-,-,-
+original,<0,24,existing paid,new car,1371,no known savings,1<=X<4,4,female div/dep/mar,none,4,real estate,25,none,rent,1,skilled,1,none,yes
+sol0,no checking,9.0,-,furniture/equipment,1388.0,<100,-,-,-,-,2.0,-,26.0,-,-,-,-,-,-,-
+sol1,>=200,4.0,-,-,1364.0,<100,<1,-,male single,co applicant,-,car,43.0,-,own,-,-,-,-,-
+sol2,0<=X<200,-,-,-,1355.0,<100,<1,3.0,-,-,-,car,-,-,own,-,unskilled resident,-,yes,-
+original,<0,24,existing paid,new car,1371,no known savings,1<=X<4,4,female div/dep/mar,none,4,real estate,25,none,rent,1,skilled,1,none,yes
+sol0,-,9.0,-,-,1364.0,<100,4<=X<7,3.0,-,-,-,-,59.0,-,own,-,-,-,-,-
+sol1,no checking,9.0,-,-,1388.0,<100,-,-,-,-,2.0,-,26.0,-,-,-,-,-,-,-
+sol2,no checking,15.0,-,-,1386.0,-,-,-,-,-,2.0,-,40.0,-,-,-,-,-,yes,-

@@ -1,0 +1,21 @@
+,duration,credit_amount,installment_commitment,age,residence_since,existing_credits,num_dependents,checking_status,credit_history,employment,foreign_worker,housing,job,other_parties,other_payment_plans,own_telephone,personal_status,property_magnitude,purpose,savings_status
+original,24.0,1371.26,4.0,25.0,4.0,1.0,1.0,<0,existing paid,1<=X<4,yes,rent,skilled,none,none,none,female div/dep/mar,real estate,new car,no known savings
+sol0,15.02,-333.52,3.86,27.04,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+original,24.0,1371.26,4.0,25.0,4.0,1.0,1.0,<0,existing paid,1<=X<4,yes,rent,skilled,none,none,none,female div/dep/mar,real estate,new car,no known savings
+sol0,7.12,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+original,24.0,1371.26,4.0,25.0,4.0,1.0,1.0,<0,existing paid,1<=X<4,yes,rent,skilled,none,none,none,female div/dep/mar,real estate,new car,no known savings
+sol0,7.12,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol1,-,-2873.47,-,30.06,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol2,-,-,1.96,26.63,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+original,24.0,1371.26,4.0,25.0,4.0,1.0,1.0,<0,existing paid,1<=X<4,yes,rent,skilled,none,none,none,female div/dep/mar,real estate,new car,no known savings
+sol0,7.12,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol1,-,-,1.96,26.63,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol2,-,-,-,75.52,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+original,24.0,1371.26,4.0,25.0,4.0,1.0,1.0,<0,existing paid,1<=X<4,yes,rent,skilled,none,none,none,female div/dep/mar,real estate,new car,no known savings
+sol0,22.0,1283.52,-,-,-,-,-,no checking,-,4<=X<7,-,-,-,-,-,-,-,life insurance,-,-
+sol1,12.0,1893.04,-,29.0,-,-,-,-,-,-,-,own,-,guarantor,-,yes,-,life insurance,-,<100
+sol2,10.0,1363.43,2.0,64.0,-,-,-,no checking,-,-,-,own,-,-,-,yes,-,car,-,<100
+original,24.0,1371.26,4.0,25.0,4.0,1.0,1.0,<0,existing paid,1<=X<4,yes,rent,skilled,none,none,none,female div/dep/mar,real estate,new car,no known savings
+sol0,-,-,-,-,-,-,-,no checking,-,4<=X<7,-,-,-,-,-,-,-,life insurance,-,-
+sol1,22.0,1018.71,-,-,-,-,-,no checking,-,4<=X<7,-,-,-,-,-,-,-,life insurance,-,-
+sol2,26.83,1910.28,-,-,-,-,-,no checking,-,4<=X<7,-,-,-,-,-,-,-,life insurance,-,-

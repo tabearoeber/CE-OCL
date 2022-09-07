@@ -1,0 +1,11 @@
+,checking_status,duration,credit_history,purpose,credit_amount,savings_status,employment,installment_commitment,personal_status,other_parties,residence_since,property_magnitude,age,other_payment_plans,housing,existing_credits,job,num_dependents,own_telephone,foreign_worker
+original,<0,24,existing paid,new car,1371,no known savings,1<=X<4,4,female div/dep/mar,none,4,real estate,25,none,rent,1,skilled,1,none,yes
+sol0,-,-,-,used car,-,-,-,-,-,-,-,-,75.0,-,-,-,-,-,-,-
+original,<0,24,existing paid,new car,1371,no known savings,1<=X<4,4,female div/dep/mar,none,4,real estate,25,none,rent,1,skilled,1,none,yes
+sol0,-,-,-,used car,-,-,-,-,-,-,-,-,75.0,-,-,-,-,-,-,-
+sol1,-,-,-,-,-,-,-,-,-,-,-,-,69.0,-,-,-,unemp/unskilled non res,-,-,-
+sol2,-,-,-,other,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+original,<0,24,existing paid,new car,1371,no known savings,1<=X<4,4,female div/dep/mar,none,4,real estate,25,none,rent,1,skilled,1,none,yes
+sol0,no checking,-,-,-,-,100<=X<500,-,-,-,-,-,-,-,-,-,-,-,-,-,-
+sol1,-,-,-,-,-,>=1000,-,-,-,-,-,-,-,-,-,-,high qualif/self emp/mgmt,-,-,-
+sol2,-,-,-,-,-,-,-,-,-,guarantor,-,-,-,-,-,-,high qualif/self emp/mgmt,-,-,-
