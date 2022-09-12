@@ -247,7 +247,8 @@ def opt(X, X1, u, F_r, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu, tr_region, en
     CEs_ = CEs.iloc[:, :-1].copy()
 
     if scaler is not None:
-        scaled_xdata_inv = scaler['preprocessor'].named_transformers_['num'].inverse_transform(CEs_[F_r])
+        try: scaled_xdata_inv = scaler['preprocessor'].named_transformers_['num'].inverse_transform(CEs_[F_r])
+        except: scaled_xdata_inv = scaler.inverse_transform(CEs_[F_r])
         #        scaled_xdata_inv = scaler.inverse_transform(CEs_[F_r])
         CEs_.loc[:, F_r] = scaled_xdata_inv
 
@@ -308,6 +309,17 @@ def vis_dataframe(dataset, CEs_, F_r, F_coh, target, only_changes=True):
     for c in df.columns.difference(F_r):
         df[c] = df.apply(lambda row: value_names(row, c), axis=1)
 
+    return df
+
+
+def visualise_changes(df):
+    orig = df[:1]
+    df = df[1:].copy()
+    df1 = pd.DataFrame()
+    for c in df.columns:
+        df1[c] = df.apply(lambda row: ce_change(row, df1, orig, c), axis=1)
+
+    df = pd.concat([orig, df1])
     return df
 
 
@@ -389,7 +401,8 @@ def evaluation(model, CEs, numerical, categorical, rounding=True, CEs_=None):
         # then we evaluate DiCE results, where we do not have CEs_
         validity = sum(model.predict(CEs.iloc[1:, :])) / number_of_solutions
     else:
-        validity = 1
+        try: validity = sum(model.predict(CEs_.drop('scaled_distance',axis=1).iloc[1:, :])) / number_of_solutions
+        except: validity = 1
 
     cont_prox, cat_prox = prox_score(categorical, numerical, CEs, number_of_solutions)
 
