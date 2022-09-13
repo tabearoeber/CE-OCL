@@ -269,7 +269,7 @@ def reverse_dummies(row, CEs_, F_coh, v):
 
 
 def ce_change(row, df, orig, c):
-    if row[c] == orig[c][0]:
+    if row[c] == orig[c].iloc[0]:
         return '-'
     else:
         return row[c]
@@ -312,15 +312,101 @@ def vis_dataframe(dataset, CEs_, F_r, F_coh, target, only_changes=True):
     return df
 
 
-def visualise_changes(df):
-    orig = df[:1]
-    df = df[1:].copy()
-    df1 = pd.DataFrame()
-    for c in df.columns:
-        df1[c] = df.apply(lambda row: ce_change(row, df1, orig, c), axis=1)
+def visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs = None, CEs_ = None,
+                      only_changes=False, exp = None, factual = None, scaler = None):
 
-    df = pd.concat([orig, df1])
-    return df
+    if method == 'DiCE':
+        if exp is None:
+            print('If the method used it DiCE, please specify exp.')
+            exit()
+        if factual is None:
+            print('If the method used it DiCE, please specify the factual instance.')
+            exit()
+        if scaler is None:
+            print('If the method used it DiCE, please specify the scaler.')
+            exit()
+
+        CEs = exp.cf_examples_list[0].final_cfs_df.iloc[:, :-1].reset_index(drop=True)
+        CEs = pd.concat([factual, CEs])
+
+        # reverse scaling
+        CEs_ = CEs.iloc[:, :-1].copy()
+        scaled_xdata_inv = scaler.inverse_transform(CEs_[d['numerical']])
+        CEs_.loc[:, d['numerical']] = scaled_xdata_inv
+        # CEs_ = scaler.inverse_transform(CEs)
+        CEs_[d['target']] = clf.predict(CEs)
+
+    elif method == 'CE-OCL':
+        # remove scaled_distance from df
+        # add target prediction
+        CEs_[d['target']] = clf.predict(CEs.drop('scaled_distance', axis=1))
+
+    df_dummies, df_orig = recreate_orig(CEs_, d, encoder)
+
+    # make sure the index is right
+    ix_names = ['original'] + ['sol' + str(i) for i in range(len(CEs.index))]
+    ix = {i: ix_names[i] for i in range(len(CEs.index))}
+    df_orig = df_orig.reset_index(drop=True).rename(index=ix)
+
+    if only_changes == True:
+        orig = df_orig[:1]
+        df_orig = df_orig[1:].copy()
+        df1 = pd.DataFrame()
+        for c in df_orig.columns:
+            df1[c] = df_orig.apply(lambda row: ce_change(row, df1, orig, c), axis=1)
+
+        df = pd.concat([orig, df1])
+        return df
+
+    else: return df_orig
+
+
+
+
+def label(row, filter_col):
+    if any(row[filter_col] == 1):
+        return 0
+    else: return 1
+
+def recreate_orig(df, d, encoder):
+    target = d['target']
+    numerical = d['numerical']
+    categorical = d['categorical']
+    # categorical = df.columns.difference(numerical + [target])
+
+    mapping = {}
+    for i in range(len(categorical)):
+        mapping[categorical[i]] = [categorical[i] + '_' + s for s in list(encoder.categories_[i])]
+    # mapping
+
+    categorical_columns = []
+    for key in mapping.keys():
+        for v in mapping[key]:
+            categorical_columns.append(v)
+    # categorical_columns
+
+    for c in categorical_columns:
+        if c in df:
+            continue
+        else:
+            feature = c.split('_')[0]
+            filter_col = [col for col in df if col.startswith(feature)]
+            df[c] = df.apply(lambda row: label(row, filter_col), axis=1)
+
+    df1 = pd.DataFrame()
+    for v in numerical + [target]:
+        df1[v] = df[v]
+
+    for v in mapping:
+        df1[v] = df[mapping[v]].apply(lambda row: reverse_dummies(row, df, mapping, v), axis=1)
+
+    for c in df1.columns.difference(numerical+[target]):
+        df1[c] = df1.apply(lambda row: value_names(row, c), axis=1)
+
+    return df, df1
+
+
+
 
 
 ######## EVALUATION ########
@@ -386,6 +472,45 @@ def spars_divers_score(CEs, number_of_solutions):
         cont_count_divers = sparsity_diver_numerator / sparsity_diver_denominator
 
     return cont_count_divers
+
+
+
+
+def evaluation_carla(df, d, rounding=True):
+    number_of_solutions = len(df.index) - 1
+    '''
+    model = predictive model
+    CEs = dataframe with factual instance in the top row and all counterfactuals in the other rows, already reverse scaled!
+    numerical = set of real features
+    categorical = set of categorical features (not one-hot encoded)
+    CEs_ = like CEs, but scaled
+    '''
+    validity = abs(sum(df[d['target']]['original'] - i for i in df[d['target']][1:]) / number_of_solutions)
+
+    cont_prox, cat_prox = prox_score(d['categorical'], d['numerical'], df, number_of_solutions)
+
+    sparsity = sparsity_score(df, number_of_solutions)
+
+    cont_diver, cat_diver = diversity_score(df, d['categorical'], d['numerical'], number_of_solutions)
+
+    cont_count_divers = spars_divers_score(dfaa, number_of_solutions)
+
+    CE_perf = pd.DataFrame([[validity, cat_prox, cont_prox, sparsity, cat_diver, cont_diver, cont_count_divers]],
+                           columns=['validity', 'cat_prox', 'cont_prox', 'sparsity', 'cat_diver', 'cont_diver',
+                                    'cont_count_divers'])
+
+    if rounding == True:
+        CE_perf = CE_perf.round(2)
+
+    return CE_perf
+
+
+
+
+
+
+
+
 
 
 def evaluation(model, CEs, numerical, categorical, rounding=True, CEs_=None):
