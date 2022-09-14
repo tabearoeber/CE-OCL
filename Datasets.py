@@ -5,7 +5,7 @@ import opticl as oc
 import ce_helpers
 
 
-def adult(wd):
+def adult(wd, alg = 'rf'):
     ## load data
     df = pd.read_csv(wd+'adult/dataset_carla_adult.csv')
     df_train = pd.read_csv(wd + 'adult/train_carla_adult.csv')
@@ -21,8 +21,6 @@ def adult(wd):
     d = dict()
 
     for line in fhand:
-        # line = line.strip()
-        # words = line.split()
         line = line.strip()
         line = line.replace('[', '')
         line = line.replace(']', '')
@@ -42,9 +40,24 @@ def adult(wd):
             d['target'] = words[1]
 
     ## load predictive model
-    path = wd + 'adult/RF_adult.pkl'
-    with open(path, 'rb') as f:
-        clf = pickle.load(f)
+    path = wd + 'adult/%s_adult.pkl' % alg.upper()
+    if os.path.exists(path):
+        with open(path, 'rb') as f:
+            clf = pickle.load(f)
+    else:
+        print('Train model: %s' % alg)
+        clf, perf = oc.run_model(df_train.drop(d['target'],axis=1),
+                                 df_train[d['target']],
+                                 df_test.drop(d['target'], axis=1),
+                                 df_test[d['target']],
+                                 alg,
+                                 'adult',
+                                 'binary',
+                                 save_path = path)
+        # filename = 'results/' + model_choice + '_' + outcome + '_trained.pkl'
+        with open(path, 'wb') as f:
+            print(f'saving... {path}')
+            pickle.dump(clf, f)
 
     ## load factual instances
     df_factuals = pd.read_csv(wd + 'adult/factuals_adult.csv')
@@ -64,24 +77,24 @@ def adult(wd):
     y_train = df_train[d['target']]
     X_train = df_train.drop(d['target'], axis=1)
 
-    if not os.path.exists('results_carla/'):
-        os.makedirs('results_carla/')
+    # if not os.path.exists('results_carla/'):
+    #     os.makedirs('results_carla/')
 
-    constraintL = oc.ConstraintLearning(X_train, y_train, clf, 'rf')
+    constraintL = oc.ConstraintLearning(X_train, y_train, clf, alg)
     constraint_add = constraintL.constraint_extrapolation('binary')
-    constraint_add.to_csv('results_carla/%s_%s_model.csv' % ('rf', 'adult'), index=False)
+    constraint_add.to_csv(wd + 'adult/%s_%s_model.csv' % (alg, 'adult'), index=False)
 
     ## create model master
     m = {
         'outcome': 'counterfactual_adult',
-        'model_type': 'rf',
-        'save_path': 'results_carla/%s_%s_model.csv' % ('rf', 'adult'),
+        'model_type': alg,
+        'save_path': '%sadult/%s_%s_model.csv' % (wd, alg, 'adult'),
         'task': 'binary',
         'objective': 0,
         'lb': 0.5,
         'ub': None,
         'SCM_counterfactuals': None,
-        'features': [[col for col in df.columns.drop('income')]]
+        'features': [[col for col in df.columns.drop(d['target'])]]
     }
 
     model_master = pd.DataFrame(m)
@@ -90,7 +103,9 @@ def adult(wd):
 
 
 
-def heloc(wd):
+
+
+def heloc(wd, alg = 'rf'):
     ## load data
     df = pd.read_csv(wd+'heloc/dataset_carla_heloc.csv')
     df_train = pd.read_csv(wd + 'heloc/train_carla_heloc.csv')
@@ -106,8 +121,6 @@ def heloc(wd):
     d = dict()
 
     for line in fhand:
-        # line = line.strip()
-        # words = line.split()
         line = line.strip()
         line = line.replace('[', '')
         line = line.replace(']', '')
@@ -127,9 +140,24 @@ def heloc(wd):
             d['target'] = words[1]
 
     ## load predictive model
-    path = wd + 'heloc/RF_heloc.pkl'
-    with open(path, 'rb') as f:
-        clf = pickle.load(f)
+    path = wd + 'heloc/%s_heloc.pkl' % alg.upper()
+    if os.path.exists(path):
+        with open(path, 'rb') as f:
+            clf = pickle.load(f)
+    else:
+        print('Train model: %s' % alg)
+        clf, perf = oc.run_model(df_train.drop(d['target'],axis=1),
+                                 df_train[d['target']],
+                                 df_test.drop(d['target'], axis=1),
+                                 df_test[d['target']],
+                                 alg,
+                                 'heloc',
+                                 'binary',
+                                 save_path = path)
+        # filename = 'results/' + model_choice + '_' + outcome + '_trained.pkl'
+        with open(path, 'wb') as f:
+            print(f'saving... {path}')
+            pickle.dump(clf, f)
 
     ## load factual instances
     df_factuals = pd.read_csv(wd + 'heloc/factuals_heloc.csv')
@@ -149,18 +177,18 @@ def heloc(wd):
     y_train = df_train[d['target']]
     X_train = df_train.drop(d['target'], axis=1)
 
-    if not os.path.exists('results_carla/'):
-        os.makedirs('results_carla/')
+    # if not os.path.exists('results_carla/'):
+    #     os.makedirs('results_carla/')
 
-    constraintL = oc.ConstraintLearning(X_train, y_train, clf, 'rf')
+    constraintL = oc.ConstraintLearning(X_train, y_train, clf, alg)
     constraint_add = constraintL.constraint_extrapolation('binary')
-    constraint_add.to_csv('results_carla/%s_%s_model.csv' % ('rf', 'heloc'), index=False)
+    constraint_add.to_csv(wd + 'heloc/%s_%s_model.csv' % (alg, 'heloc'), index=False)
 
     ## create model master
     m = {
         'outcome': 'counterfactual_heloc',
-        'model_type': 'rf',
-        'save_path': 'results_carla/%s_%s_model.csv' % ('rf', 'heloc'),
+        'model_type': alg,
+        'save_path': '%sheloc/%s_%s_model.csv' % (wd, alg, 'heloc'),
         'task': 'binary',
         'objective': 0,
         'lb': 0.5,
@@ -175,7 +203,11 @@ def heloc(wd):
 
 
 
-def compas(wd):
+
+
+
+
+def compas(wd, alg = 'rf'):
     ## load data
     df = pd.read_csv(wd+'compas/dataset_carla_compas.csv')
     df_train = pd.read_csv(wd + 'compas/train_carla_compas.csv')
@@ -191,8 +223,6 @@ def compas(wd):
     d = dict()
 
     for line in fhand:
-        # line = line.strip()
-        # words = line.split()
         line = line.strip()
         line = line.replace('[', '')
         line = line.replace(']', '')
@@ -212,9 +242,24 @@ def compas(wd):
             d['target'] = words[1]
 
     ## load predictive model
-    path = wd + 'compas/RF_compas.pkl'
-    with open(path, 'rb') as f:
-        clf = pickle.load(f)
+    path = wd + 'compas/%s_compas.pkl' % alg.upper()
+    if os.path.exists(path):
+        with open(path, 'rb') as f:
+            clf = pickle.load(f)
+    else:
+        print('Train model: %s' % alg)
+        clf, perf = oc.run_model(df_train.drop(d['target'],axis=1),
+                                 df_train[d['target']],
+                                 df_test.drop(d['target'], axis=1),
+                                 df_test[d['target']],
+                                 alg,
+                                 'compas',
+                                 'binary',
+                                 save_path = path)
+        # filename = 'results/' + model_choice + '_' + outcome + '_trained.pkl'
+        with open(path, 'wb') as f:
+            print(f'saving... {path}')
+            pickle.dump(clf, f)
 
     ## load factual instances
     df_factuals = pd.read_csv(wd + 'compas/factuals_compas.csv')
@@ -234,18 +279,18 @@ def compas(wd):
     y_train = df_train[d['target']]
     X_train = df_train.drop(d['target'], axis=1)
 
-    if not os.path.exists('results_carla/'):
-        os.makedirs('results_carla/')
+    # if not os.path.exists('results_carla/'):
+    #     os.makedirs('results_carla/')
 
-    constraintL = oc.ConstraintLearning(X_train, y_train, clf, 'rf')
+    constraintL = oc.ConstraintLearning(X_train, y_train, clf, alg)
     constraint_add = constraintL.constraint_extrapolation('binary')
-    constraint_add.to_csv('results_carla/%s_%s_model.csv' % ('rf', 'compas'), index=False)
+    constraint_add.to_csv(wd + 'compas/%s_%s_model.csv' % (alg, 'compas'), index=False)
 
     ## create model master
     m = {
         'outcome': 'counterfactual_compas',
-        'model_type': 'rf',
-        'save_path': 'results_carla/%s_%s_model.csv' % ('rf', 'compas'),
+        'model_type': alg,
+        'save_path': '%scompas/%s_%s_model.csv' % (wd, alg, 'compas'),
         'task': 'binary',
         'objective': 0,
         'lb': 0.5,
@@ -260,7 +305,10 @@ def compas(wd):
 
 
 
-def give_me_some_credit(wd):
+
+
+
+def give_me_some_credit(wd, alg = 'rf'):
     ## load data
     df = pd.read_csv(wd+'give_me_some_credit/dataset_carla_give_me_some_credit.csv')
     df_train = pd.read_csv(wd + 'give_me_some_credit/train_carla_give_me_some_credit.csv')
@@ -276,8 +324,6 @@ def give_me_some_credit(wd):
     d = dict()
 
     for line in fhand:
-        # line = line.strip()
-        # words = line.split()
         line = line.strip()
         line = line.replace('[', '')
         line = line.replace(']', '')
@@ -297,9 +343,24 @@ def give_me_some_credit(wd):
             d['target'] = words[1]
 
     ## load predictive model
-    path = wd + 'give_me_some_credit/RF_give_me_some_credit.pkl'
-    with open(path, 'rb') as f:
-        clf = pickle.load(f)
+    path = wd + 'give_me_some_credit/%s_give_me_some_credit.pkl' % alg.upper()
+    if os.path.exists(path):
+        with open(path, 'rb') as f:
+            clf = pickle.load(f)
+    else:
+        print('Train model: %s' % alg)
+        clf, perf = oc.run_model(df_train.drop(d['target'],axis=1),
+                                 df_train[d['target']],
+                                 df_test.drop(d['target'], axis=1),
+                                 df_test[d['target']],
+                                 alg,
+                                 'give_me_some_credit',
+                                 'binary',
+                                 save_path = path)
+        # filename = 'results/' + model_choice + '_' + outcome + '_trained.pkl'
+        with open(path, 'wb') as f:
+            print(f'saving... {path}')
+            pickle.dump(clf, f)
 
     ## load factual instances
     df_factuals = pd.read_csv(wd + 'give_me_some_credit/factuals_give_me_some_credit.csv')
@@ -319,18 +380,18 @@ def give_me_some_credit(wd):
     y_train = df_train[d['target']]
     X_train = df_train.drop(d['target'], axis=1)
 
-    if not os.path.exists('results_carla/'):
-        os.makedirs('results_carla/')
+    # if not os.path.exists('results_carla/'):
+    #     os.makedirs('results_carla/')
 
-    constraintL = oc.ConstraintLearning(X_train, y_train, clf, 'rf')
+    constraintL = oc.ConstraintLearning(X_train, y_train, clf, alg)
     constraint_add = constraintL.constraint_extrapolation('binary')
-    constraint_add.to_csv('results_carla/%s_%s_model.csv' % ('rf', 'give_me_some_credit'), index=False)
+    constraint_add.to_csv(wd + 'give_me_some_credit/%s_%s_model.csv' % (alg, 'give_me_some_credit'), index=False)
 
     ## create model master
     m = {
         'outcome': 'counterfactual_give_me_some_credit',
-        'model_type': 'rf',
-        'save_path': 'results_carla/%s_%s_model.csv' % ('rf', 'give_me_some_credit'),
+        'model_type': alg,
+        'save_path': '%sgive_me_some_credit/%s_%s_model.csv' % (wd, alg, 'give_me_some_credit'),
         'task': 'binary',
         'objective': 0,
         'lb': 0.5,
@@ -342,5 +403,9 @@ def give_me_some_credit(wd):
     model_master = pd.DataFrame(m)
 
     return df, df_train, df_test, d, clf, df_factuals, model_master, encoder, scaler
+
+
+
+
 
 

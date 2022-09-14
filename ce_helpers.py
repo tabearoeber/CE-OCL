@@ -493,7 +493,7 @@ def evaluation_carla(df, d, rounding=True):
 
     cont_diver, cat_diver = diversity_score(df, d['categorical'], d['numerical'], number_of_solutions)
 
-    cont_count_divers = spars_divers_score(dfaa, number_of_solutions)
+    cont_count_divers = spars_divers_score(df, number_of_solutions)
 
     CE_perf = pd.DataFrame([[validity, cat_prox, cont_prox, sparsity, cat_diver, cont_diver, cont_count_divers]],
                            columns=['validity', 'cat_prox', 'cont_prox', 'sparsity', 'cat_diver', 'cont_diver',
