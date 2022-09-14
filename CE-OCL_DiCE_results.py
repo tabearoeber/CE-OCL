@@ -15,7 +15,7 @@ You need to change the dataset.
 You need to change the model (alg). 
 '''
 wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
-dataset = DS.compas
+dataset = DS.adult
 alg = 'rf'
 # DiCE_methods = ['random', 'genetic', 'kdtree']
 DiCE_methods = ['random', 'genetic']
@@ -112,8 +112,16 @@ for u_index in range(len(df_factuals)):
 
     df_performance_1 = pd.DataFrame()
 
-    CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
+    enlarge_tr = False
+    try:
+        CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
                            tr_region, enlarge_tr, 3, model_master, scaler)
+    except:
+        print('Trust region is being enlarged!')
+        enlarge_tr = True
+        CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
+                                                tr_region, enlarge_tr, 3, model_master, scaler)
+
 
     df_orig = ce_helpers.visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs=CEs, CEs_ = CEs_)
     df_performance_1 = ce_helpers.evaluation_carla(df_orig, d)
@@ -153,6 +161,16 @@ for u_index in range(len(df_factuals)):
         cat_diver['DiCE_%s' % meth].append(df_performance_1.cat_diver.item())
         cont_diver['DiCE_%s' % meth].append(df_performance_1.cont_diver.item())
         cont_count_divers['DiCE_%s' % meth].append(df_performance_1.cont_count_divers.item())
+
+# remove None values
+for key in validity.keys():
+    validity[key] = [i for i in validity[key] if i is not None]
+    cat_prox[key] = [i for i in cat_prox[key] if i is not None]
+    cont_prox[key] = [i for i in cont_prox[key] if i is not None]
+    sparsity[key] = [i for i in sparsity[key] if i is not None]
+    cat_diver[key] = [i for i in cat_diver[key] if i is not None]
+    cont_diver[key] = [i for i in cont_diver[key] if i is not None]
+    cont_count_divers[key] = [i for i in cont_count_divers[key] if i is not None]
 
 
 '''
