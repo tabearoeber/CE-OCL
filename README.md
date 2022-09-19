@@ -22,8 +22,6 @@
 
 ## set up virtual environment
 
-:warning: adjust directory to the package OptiCL.
-
 In your terminal, run: 
 
 ```
