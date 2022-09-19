@@ -22,7 +22,7 @@
 
 ## set up virtual environment
 
-:warning: adjust directories to the packages DiCE and OptiCL. Make sure that DiCE is the one we modified to also be able to handle SVM.
+:warning: adjust directory to the package OptiCL.
 
 In your terminal, run: 
 
