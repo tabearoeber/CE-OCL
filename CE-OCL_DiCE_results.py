@@ -12,15 +12,34 @@ import pandas as pd
 '''
 You need to adjust the directory to the data folder and the results.
 You need to change the dataset. 
-You need to change the model (alg). 
+You need to change the model (alg).
+
+Use trust region or not? To compare with other carla method, we do not use the TR!  
 '''
 wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
 dataset = DS.adult
+act = DS.adult_actionability
 alg = 'rf'
 # DiCE_methods = ['random', 'genetic', 'kdtree']
-DiCE_methods = ['random', 'genetic']
-results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results_carla/'
+DiCE_methods = ['genetic']
+# results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results_carla/'
+results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results/'
+# tr_region = False
+# counterfactuals = 1
+# actionability = False
+tr_region = True
+counterfactuals = 3
+actionability = False
 
+if tr_region:
+    tr = 'with trust region'
+else:
+    tr = 'without trust region'
+
+if actionability:
+    a = 'with extra actionability constraints'
+else:
+    a = 'without extra actionability constraints'
 
 
 '''
@@ -59,7 +78,7 @@ X1 = X.iloc[y_ix_1[0],:].copy().reset_index(drop=True, inplace=False)
 
 sp = True
 mu = 10000
-tr_region = True
+# tr_region = True
 enlarge_tr = False
 
 # features that can only increase (become larger)
@@ -110,57 +129,128 @@ for u_index in range(len(df_factuals)):
     print('u_index: %i' % u_index)
     u = df_factuals.drop(target,axis=1).iloc[u_index,:]
 
-    df_performance_1 = pd.DataFrame()
+    if actionability:
+        L, Pers_I, P, F_coh, F_int, F_r, I, feature_ranges = act(df, d, encoder, u)
 
-    enlarge_tr = False
-    try:
-        CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
-                           tr_region, enlarge_tr, 3, model_master, scaler)
-    except:
-        print('Trust region is being enlarged!')
-        enlarge_tr = True
-        CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
-                                                tr_region, enlarge_tr, 3, model_master, scaler)
-
-
-    df_orig = ce_helpers.visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs=CEs, CEs_ = CEs_)
-    df_performance_1 = ce_helpers.evaluation_carla(df_orig, d)
-
-    validity['CE-OCL'].append(df_performance_1.validity.item())
-    cat_prox['CE-OCL'].append(df_performance_1.cat_prox.item())
-    cont_prox['CE-OCL'].append(df_performance_1.cont_prox.item())
-    sparsity['CE-OCL'].append(df_performance_1.sparsity.item())
-    cat_diver['CE-OCL'].append(df_performance_1.cat_diver.item())
-    cont_diver['CE-OCL'].append(df_performance_1.cont_diver.item())
-    cont_count_divers['CE-OCL'].append(df_performance_1.cont_count_divers.item())
-
-    for meth in DiCE_methods:
-
+        ## CE-OCL
         df_performance_1 = pd.DataFrame()
-        print('-----DiCE_%s-----' % meth)
 
-        exp = dice_ml.Dice(data, m, method=meth)
-        if meth == 'random':
-            e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=3, desired_class="opposite", random_seed=0,
-                                        features_to_vary = features_to_vary)
+        enlarge_tr = False
+        try:
+            CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
+                                                    tr_region, enlarge_tr, counterfactuals, model_master, scaler)
+        except:
+            print('Trust region is being enlarged!')
+            enlarge_tr = True
+            CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
+                                                    tr_region, enlarge_tr, counterfactuals, model_master, scaler)
+
+        df_orig = ce_helpers.visualise_changes(clf, d, encoder, method='CE-OCL', CEs=CEs, CEs_=CEs_)
+        if len(df_orig) > 1:  # i.e. if there are more than just the factual instance
+            df_performance_1 = ce_helpers.evaluation(df_orig, d)
+
+            validity['CE-OCL'].append(df_performance_1.validity.item())
+            cat_prox['CE-OCL'].append(df_performance_1.cat_prox.item())
+            cont_prox['CE-OCL'].append(df_performance_1.cont_prox.item())
+            sparsity['CE-OCL'].append(df_performance_1.sparsity.item())
+            cat_diver['CE-OCL'].append(df_performance_1.cat_diver.item())
+            cont_diver['CE-OCL'].append(df_performance_1.cont_diver.item())
+            cont_count_divers['CE-OCL'].append(df_performance_1.cont_count_divers.item())
         else:
-            e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=3, desired_class="opposite",
-                                              features_to_vary = features_to_vary)
-            # try: e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=3, desired_class="opposite",
-            #                             features_to_vary = features_to_vary)
-            # except:
-            #     continue
+            print('------NO SOLUTION FOUND WITH CE-OCL------')
 
-        df_orig = ce_helpers.visualise_changes(clf, d, encoder, method='DiCE', exp = e1, factual=pd.DataFrame(u).T, scaler=scaler, only_changes=False)
-        df_performance_1 = ce_helpers.evaluation_carla(df_orig, d)
+        # DiCE
+        for meth in DiCE_methods:
 
-        validity['DiCE_%s' % meth].append(df_performance_1.validity.item())
-        cat_prox['DiCE_%s' % meth].append(df_performance_1.cat_prox.item())
-        cont_prox['DiCE_%s' % meth].append(df_performance_1.cont_prox.item())
-        sparsity['DiCE_%s' % meth].append(df_performance_1.sparsity.item())
-        cat_diver['DiCE_%s' % meth].append(df_performance_1.cat_diver.item())
-        cont_diver['DiCE_%s' % meth].append(df_performance_1.cont_diver.item())
-        cont_count_divers['DiCE_%s' % meth].append(df_performance_1.cont_count_divers.item())
+            df_performance_1 = pd.DataFrame()
+            print('-----DiCE_%s-----' % meth)
+
+            exp = dice_ml.Dice(data, m, method=meth)
+
+            if meth == 'random':
+                e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=counterfactuals,
+                                                  desired_class="opposite", random_seed=0,
+                                                  features_to_vary=features_to_vary, permitted_ranges = feature_ranges)
+            else:
+                # e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=3, desired_class="opposite",
+                #                                   features_to_vary = features_to_vary)
+                try:
+                    e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=counterfactuals,
+                                                      desired_class="opposite",
+                                                      features_to_vary=features_to_vary, permitted_range = feature_ranges)
+                except:
+                    continue
+
+            df_orig = ce_helpers.visualise_changes(clf, d, encoder, method='DiCE', exp=e1, factual=pd.DataFrame(u).T,
+                                                   scaler=scaler, only_changes=False)
+            df_performance_1 = ce_helpers.evaluation(df_orig, d)
+
+            validity['DiCE_%s' % meth].append(df_performance_1.validity.item())
+            cat_prox['DiCE_%s' % meth].append(df_performance_1.cat_prox.item())
+            cont_prox['DiCE_%s' % meth].append(df_performance_1.cont_prox.item())
+            sparsity['DiCE_%s' % meth].append(df_performance_1.sparsity.item())
+            cat_diver['DiCE_%s' % meth].append(df_performance_1.cat_diver.item())
+            cont_diver['DiCE_%s' % meth].append(df_performance_1.cont_diver.item())
+            cont_count_divers['DiCE_%s' % meth].append(df_performance_1.cont_count_divers.item())
+
+    else:
+        ## CE-OCL
+        df_performance_1 = pd.DataFrame()
+
+        enlarge_tr = False
+        try:
+            CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
+                               tr_region, enlarge_tr, counterfactuals, model_master, scaler)
+        except:
+            print('Trust region is being enlarged!')
+            enlarge_tr = True
+            CEs, CEs_, final_model = ce_helpers.opt(X, X1, u, numerical, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu,
+                                                    tr_region, enlarge_tr, counterfactuals, model_master, scaler)
+
+
+        df_orig = ce_helpers.visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs=CEs, CEs_ = CEs_)
+        if len(df_orig) > 1: # i.e. if there are more than just the factual instance
+            df_performance_1 = ce_helpers.evaluation(df_orig, d)
+
+            validity['CE-OCL'].append(df_performance_1.validity.item())
+            cat_prox['CE-OCL'].append(df_performance_1.cat_prox.item())
+            cont_prox['CE-OCL'].append(df_performance_1.cont_prox.item())
+            sparsity['CE-OCL'].append(df_performance_1.sparsity.item())
+            cat_diver['CE-OCL'].append(df_performance_1.cat_diver.item())
+            cont_diver['CE-OCL'].append(df_performance_1.cont_diver.item())
+            cont_count_divers['CE-OCL'].append(df_performance_1.cont_count_divers.item())
+        else:
+            print('------NO SOLUTION FOUND WITH CE-OCL------')
+
+        # DiCE
+        for meth in DiCE_methods:
+
+            df_performance_1 = pd.DataFrame()
+            print('-----DiCE_%s-----' % meth)
+
+            exp = dice_ml.Dice(data, m, method=meth)
+
+            if meth == 'random':
+                e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=counterfactuals, desired_class="opposite", random_seed=0,
+                                            features_to_vary = features_to_vary)
+            else:
+                # e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=3, desired_class="opposite",
+                #                                   features_to_vary = features_to_vary)
+                try: e1 = exp.generate_counterfactuals(pd.DataFrame(u).T, total_CFs=counterfactuals, desired_class="opposite",
+                                            features_to_vary = features_to_vary)
+                except:
+                    continue
+
+            df_orig = ce_helpers.visualise_changes(clf, d, encoder, method='DiCE', exp = e1, factual=pd.DataFrame(u).T, scaler=scaler, only_changes=False)
+            df_performance_1 = ce_helpers.evaluation(df_orig, d)
+
+            validity['DiCE_%s' % meth].append(df_performance_1.validity.item())
+            cat_prox['DiCE_%s' % meth].append(df_performance_1.cat_prox.item())
+            cont_prox['DiCE_%s' % meth].append(df_performance_1.cont_prox.item())
+            sparsity['DiCE_%s' % meth].append(df_performance_1.sparsity.item())
+            cat_diver['DiCE_%s' % meth].append(df_performance_1.cat_diver.item())
+            cont_diver['DiCE_%s' % meth].append(df_performance_1.cont_diver.item())
+            cont_count_divers['DiCE_%s' % meth].append(df_performance_1.cont_count_divers.item())
 
 # remove None values
 for key in validity.keys():
@@ -185,7 +275,7 @@ with open(fnamefull, 'a') as f:
     # print('--->', file=f)
     print('%s \n' % dataset.__name__, file=f)
     # print('------', file=f)
-    print('%s \n' % alg.upper(), file=f)
+    print('%s -- %s -- %i counterfactual(s) -- %s \n' % (alg.upper(), tr, counterfactuals, a), file=f)
     # print('------', file=f)
     print(' \t Validity  \t Cat_prox \t Cont_prox \t Sparsity \t Cat_diver \t Cont_diver \t Cont_count_divers \n', file=f)
 

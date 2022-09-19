@@ -511,6 +511,7 @@ def evaluation(df, d, rounding=True):
     '''
     validity = abs(sum(df[d['target']]['original'] - i for i in df[d['target']][1:]) / number_of_solutions)
 
+    df = df.drop(d['target'], axis=1)
     cont_prox, cat_prox = prox_score(d['categorical'], d['numerical'], df, number_of_solutions)
 
     sparsity = sparsity_score(df, number_of_solutions)
