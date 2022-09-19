@@ -38,9 +38,7 @@ python --version
 pip list
 
 # install DiCE
-cd /Users/tabearober/Documents/Counterfactuals/packages/DiCE
-pip install -e .
-#pip install dice-ml
+pip install dice-ml
 
 # install OptiCL
 # first navigate to the package, then install using pip
