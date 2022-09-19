@@ -1,0 +1,153 @@
+heloc 
+
+RF -- without trust region -- 1 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -12.21 (2.67) 	 0.94 (0.01) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 0.97 (0.03) 	 nan (nan) 	 -203.83 (13.70) 	 0.22 (0.02) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+FACE: 	 0.77 (0.08) 	 nan (nan) 	 -361.80 (25.20) 	 0.17 (0.02) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+AR: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+GrowingSpheres: 	 0.77 (0.08) 	 nan (nan) 	 -87.36 (13.16) 	 0.00 (0.00) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+RF -- without trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -13.53 (2.35) 	 0.93 (0.00) 	 nan (nan) 	 9.94 (2.74) 	 0.09 (0.01) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 0.90 (0.03) 	 nan (nan) 	 -231.05 (11.17) 	 0.21 (0.02) 	 nan (nan) 	 223.91 (14.16) 	 0.61 (0.02) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+RF -- with trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -94.24 (13.68) 	 0.75 (0.02) 	 nan (nan) 	 18.93 (4.62) 	 0.24 (0.02) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+LINEAR -- without trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -99.09 (14.22) 	 0.88 (0.01) 	 nan (nan) 	 188.16 (28.38) 	 0.21 (0.01) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 0.70 (0.06) 	 nan (nan) 	 -232.39 (12.87) 	 0.21 (0.02) 	 nan (nan) 	 207.02 (11.34) 	 0.61 (0.02) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+LINEAR -- with trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -138.29 (16.52) 	 0.72 (0.02) 	 nan (nan) 	 72.51 (8.39) 	 0.34 (0.02) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+CART -- without trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -13.12 (1.40) 	 0.95 (0.00) 	 nan (nan) 	 19.72 (2.41) 	 0.08 (0.00) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 0.80 (0.07) 	 nan (nan) 	 -216.70 (13.47) 	 0.22 (0.02) 	 nan (nan) 	 234.89 (16.10) 	 0.61 (0.02) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+CART -- with trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -99.05 (13.45) 	 0.73 (0.02) 	 nan (nan) 	 41.03 (6.53) 	 0.31 (0.02) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+MLP -- without trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -25.09 (7.57) 	 0.92 (0.01) 	 nan (nan) 	 21.30 (4.18) 	 0.12 (0.01) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 0.67 (0.07) 	 nan (nan) 	 -252.56 (14.17) 	 0.20 (0.02) 	 nan (nan) 	 246.96 (16.31) 	 0.61 (0.02) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+MLP -- with trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -98.94 (15.87) 	 0.75 (0.02) 	 nan (nan) 	 15.41 (5.52) 	 0.26 (0.02) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+GBM -- without trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -8.41 (2.45) 	 0.94 (0.00) 	 nan (nan) 	 16.31 (4.92) 	 0.10 (0.00) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 0.73 (0.08) 	 nan (nan) 	 -234.96 (11.60) 	 0.22 (0.02) 	 nan (nan) 	 248.95 (17.34) 	 0.59 (0.02) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
+heloc 
+
+GBM -- with trust region -- 3 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -89.91 (14.70) 	 0.76 (0.02) 	 nan (nan) 	 18.70 (6.87) 	 0.25 (0.02) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+
