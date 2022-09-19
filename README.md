@@ -40,17 +40,15 @@ pip list
 # install DiCE
 pip install dice-ml
 
-# install OptiCL
-# first navigate to the package, then install using pip
-cd /Users/tabearober/Documents/Counterfactuals/packages/OptiCL 
-pip install .
-
 # install requirements
 cd /Users/tabearober/Documents/Counterfactuals/CE-OCL
 pip install -r requirements.txt
 
 # install jupyter
 pip install jupyter
+
+# install Gurobi
+visit [Gurobi website](https://www.gurobi.com/products/gurobi-optimizer/)
 
 # exit virtual env
 deactivate

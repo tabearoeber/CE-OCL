@@ -3,7 +3,8 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split
 from pyomo.environ import *
-import opticl as oc
+import constraint_learning as cl
+import run_MLmodels as rm
 import os
 import pickle
 from scipy import stats
@@ -122,13 +123,13 @@ def train_models(outcome_dict, version):
 
             alg_run = 'rf_shallow' if alg == 'rf' else alg
 
-            m, perf = oc.run_model(X_train, y_train, X_test, y_test, alg_run, outcome, task=task_type,
+            m, perf = rm.run_model(X_train, y_train, X_test, y_test, alg_run, outcome, task=task_type,
                                    seed=s, cv_folds=5,
                                    save=True
                                    )
 
             ## Save model
-            constraintL = oc.ConstraintLearning(X_train, y_train, m, alg)
+            constraintL = cl.ConstraintLearning(X_train, y_train, m, alg)
             constraint_add = constraintL.constraint_extrapolation(task_type)
             constraint_add.to_csv('results/%s/%s_%s_model.csv' % (alg, version, outcome), index=False)
 
