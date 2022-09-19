@@ -316,7 +316,23 @@ def value_names(row, c):
 def visualise_changes(clf, d, encoder=None, method = 'CE-OCL', CEs = None, CEs_ = None,
                       only_changes=False, exp = None, factual = None, scaler = None, F_coh = None):
 
-    if method == 'DiCE':
+    if method == 'CARLA':
+        if factual is None:
+            print('If the method used it DiCE, please specify the factual instance.')
+            exit()
+        if scaler is None:
+            print('If the method used it CARLA, please specify the scaler.')
+            exit()
+
+        CEs[d['target']] = clf.predict(CEs)
+        CEs = pd.concat([factual, CEs])
+
+        # reverse scaling
+        CEs_ = CEs.copy()
+        scaled_xdata_inv = scaler.inverse_transform(CEs_[d['numerical']])
+        CEs_.loc[:, d['numerical']] = scaled_xdata_inv
+
+    elif method == 'DiCE':
         if exp is None:
             print('If the method used it DiCE, please specify exp.')
             exit()
