@@ -48,7 +48,7 @@ pip install -r requirements.txt
 pip install jupyter
 
 # install Gurobi
-visit [Gurobi website](https://www.gurobi.com/products/gurobi-optimizer/)
+visit https://www.gurobi.com/products/gurobi-optimizer/
 
 # exit virtual env
 deactivate
