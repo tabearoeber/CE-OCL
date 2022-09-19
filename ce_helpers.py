@@ -124,7 +124,7 @@ def train_models(outcome_dict, version):
 
             m, perf = oc.run_model(X_train, y_train, X_test, y_test, alg_run, outcome, task=task_type,
                                    seed=s, cv_folds=5,
-                                   save=False
+                                   save=True
                                    )
 
             ## Save model
@@ -285,35 +285,35 @@ def value_names(row, c):
     else:
         return row[c].split('_')[-1]
 
+#
+# def vis_dataframe(dataset, CEs_, F_r, F_coh, target, only_changes=True):
+#     df = pd.DataFrame()
+#     for v in F_r:
+#         df[v] = CEs_[v]
+#
+#     for v in F_coh:
+#         df[v] = CEs_[F_coh[v]].apply(lambda row: reverse_dummies(row, CEs_, F_coh, v), axis=1)
+#
+#     df = df.round(2)
+#     df
+#
+#     if only_changes:
+#         orig = df[:1]
+#         df = df[1:].copy()
+#         df1 = pd.DataFrame()
+#         for c in df.columns:
+#             df1[c] = df.apply(lambda row: ce_change(row, df1, orig, c), axis=1)
+#
+#         df = pd.concat([orig, df1])
+#
+#     for c in df.columns.difference(F_r):
+#         df[c] = df.apply(lambda row: value_names(row, c), axis=1)
+#
+#     return df
 
-def vis_dataframe(dataset, CEs_, F_r, F_coh, target, only_changes=True):
-    df = pd.DataFrame()
-    for v in F_r:
-        df[v] = CEs_[v]
 
-    for v in F_coh:
-        df[v] = CEs_[F_coh[v]].apply(lambda row: reverse_dummies(row, CEs_, F_coh, v), axis=1)
-
-    df = df.round(2)
-    df
-
-    if only_changes:
-        orig = df[:1]
-        df = df[1:].copy()
-        df1 = pd.DataFrame()
-        for c in df.columns:
-            df1[c] = df.apply(lambda row: ce_change(row, df1, orig, c), axis=1)
-
-        df = pd.concat([orig, df1])
-
-    for c in df.columns.difference(F_r):
-        df[c] = df.apply(lambda row: value_names(row, c), axis=1)
-
-    return df
-
-
-def visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs = None, CEs_ = None,
-                      only_changes=False, exp = None, factual = None, scaler = None):
+def visualise_changes(clf, d, encoder=None, method = 'CE-OCL', CEs = None, CEs_ = None,
+                      only_changes=False, exp = None, factual = None, scaler = None, F_coh = None):
 
     if method == 'DiCE':
         if exp is None:
@@ -330,7 +330,7 @@ def visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs = None, CEs_ = Non
         CEs = pd.concat([factual, CEs])
 
         # reverse scaling
-        CEs_ = CEs.iloc[:, :-1].copy()
+        CEs_ = CEs.copy()
         scaled_xdata_inv = scaler.inverse_transform(CEs_[d['numerical']])
         CEs_.loc[:, d['numerical']] = scaled_xdata_inv
         # CEs_ = scaler.inverse_transform(CEs)
@@ -339,16 +339,37 @@ def visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs = None, CEs_ = Non
     elif method == 'CE-OCL':
         # remove scaled_distance from df
         # add target prediction
-        CEs_[d['target']] = clf.predict(CEs.drop('scaled_distance', axis=1))
+        # CEs_[d['target']] = clf.predict(CEs.drop('scaled_distance', axis=1))
+        CEs_.loc['original', d['target']] = clf.predict(pd.DataFrame(CEs.drop('scaled_distance', axis=1).loc['original']).T)
+        CEs_.loc['sol0':, d['target']] = abs(CEs_.loc['original', d['target']] - 1)
 
-    df_dummies, df_orig = recreate_orig(CEs_, d, encoder)
+    # if we can specify an encoder, then we're dealing with one of the CARLA datasets
+    if encoder is not None:
+        df_dummies, df_orig = recreate_orig(CEs_, d, encoder)
 
-    # make sure the index is right
-    ix_names = ['original'] + ['sol' + str(i) for i in range(len(CEs.index))]
-    ix = {i: ix_names[i] for i in range(len(CEs.index))}
-    df_orig = df_orig.reset_index(drop=True).rename(index=ix)
+        # make sure the index is right
+        ix_names = ['original'] + ['sol' + str(i) for i in range(len(CEs.index))]
+        ix = {i: ix_names[i] for i in range(len(CEs.index))}
+        df_orig = df_orig.reset_index(drop=True).rename(index=ix)
 
-    if only_changes == True:
+    elif encoder is None:
+        if F_coh is None:
+            print('Please specify either encoder or F_coh.')
+            exit()
+
+        df_orig = pd.DataFrame()
+        for v in d['numerical']+[d['target']]:
+            df_orig[v] = CEs_[v].round(2)
+
+        for v in F_coh:
+            df_orig[v] = CEs_[F_coh[v]].apply(lambda row: reverse_dummies(row, CEs_, F_coh, v), axis=1)
+
+        for c in df_orig.columns.difference(d['numerical']+[d['target']]):
+            df_orig[c] = df_orig.apply(lambda row: value_names(row, c), axis=1)
+
+        # df_orig = df_orig.round(2)
+
+    if only_changes:
         orig = df_orig[:1]
         df_orig = df_orig[1:].copy()
         df1 = pd.DataFrame()
@@ -356,6 +377,7 @@ def visualise_changes(clf, d, encoder, method = 'CE-OCL', CEs = None, CEs_ = Non
             df1[c] = df_orig.apply(lambda row: ce_change(row, df1, orig, c), axis=1)
 
         df = pd.concat([orig, df1])
+        df = df.round(2)
         return df
 
     else: return df_orig
@@ -476,8 +498,10 @@ def spars_divers_score(CEs, number_of_solutions):
 
 
 
-def evaluation_carla(df, d, rounding=True):
+def evaluation(df, d, rounding=True):
     number_of_solutions = len(df.index) - 1
+    # if number_of_solutions == 0:
+    #     return number_of_solutions
     '''
     model = predictive model
     CEs = dataframe with factual instance in the top row and all counterfactuals in the other rows, already reverse scaled!
@@ -512,39 +536,39 @@ def evaluation_carla(df, d, rounding=True):
 
 
 
-
-def evaluation(model, CEs, numerical, categorical, rounding=True, CEs_=None):
-    number_of_solutions = len(CEs.index) - 1
-    '''
-    model = predictive model
-    CEs = dataframe with factual instance in the top row and all counterfactuals in the other rows, already reverse scaled!
-    numerical = set of real features
-    categorical = set of categorical features (not one-hot encoded)
-    CEs_ = like CEs, but scaled
-    '''
-    if CEs_ is None:
-        # then we evaluate DiCE results, where we do not have CEs_
-        validity = sum(model.predict(CEs.iloc[1:, :])) / number_of_solutions
-    else:
-        try: validity = sum(model.predict(CEs_.drop('scaled_distance',axis=1).iloc[1:, :])) / number_of_solutions
-        except: validity = 1
-
-    cont_prox, cat_prox = prox_score(categorical, numerical, CEs, number_of_solutions)
-
-    sparsity = sparsity_score(CEs, number_of_solutions)
-
-    cont_diver, cat_diver = diversity_score(CEs, categorical, numerical, number_of_solutions)
-
-    cont_count_divers = spars_divers_score(CEs, number_of_solutions)
-
-    CE_perf = pd.DataFrame([[validity, cat_prox, cont_prox, sparsity, cat_diver, cont_diver, cont_count_divers]],
-                           columns=['validity', 'cat_prox', 'cont_prox', 'sparsity', 'cat_diver', 'cont_diver',
-                                    'cont_count_divers'])
-
-    if rounding == True:
-        CE_perf = CE_perf.round(2)
-
-    return CE_perf
+#
+# def evaluation(model, CEs, numerical, categorical, rounding=True, CEs_=None):
+#     number_of_solutions = len(CEs.index) - 1
+#     '''
+#     model = predictive model
+#     CEs = dataframe with factual instance in the top row and all counterfactuals in the other rows, already reverse scaled!
+#     numerical = set of real features
+#     categorical = set of categorical features (not one-hot encoded)
+#     CEs_ = like CEs, but scaled
+#     '''
+#     if CEs_ is None:
+#         # then we evaluate DiCE results, where we do not have CEs_
+#         validity = sum(model.predict(CEs.iloc[1:, :])) / number_of_solutions
+#     else:
+#         try: validity = sum(model.predict(CEs_.drop('scaled_distance',axis=1).iloc[1:, :])) / number_of_solutions
+#         except: validity = 1
+#
+#     cont_prox, cat_prox = prox_score(categorical, numerical, CEs, number_of_solutions)
+#
+#     sparsity = sparsity_score(CEs, number_of_solutions)
+#
+#     cont_diver, cat_diver = diversity_score(CEs, categorical, numerical, number_of_solutions)
+#
+#     cont_count_divers = spars_divers_score(CEs, number_of_solutions)
+#
+#     CE_perf = pd.DataFrame([[validity, cat_prox, cont_prox, sparsity, cat_diver, cont_diver, cont_count_divers]],
+#                            columns=['validity', 'cat_prox', 'cont_prox', 'sparsity', 'cat_diver', 'cont_diver',
+#                                     'cont_count_divers'])
+#
+#     if rounding == True:
+#         CE_perf = CE_perf.round(2)
+#
+#     return CE_perf
 
 
 def CounterfactualExplanation(X, u, F_r, F_b, F_int, F_coh, mu, sparsity_RHS, I, L, Pers_I, P, obj='l2', sparsity=True,
