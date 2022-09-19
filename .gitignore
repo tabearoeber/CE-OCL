@@ -1,10 +1,5 @@
 # results folder
-results/mlp
-results/linear
-results/svm
-results/rf
-*.pkl
-results/german_credit_v1_performance.csv
+old_notebooks&scripts/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
