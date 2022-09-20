@@ -18,13 +18,15 @@ Use trust region or not? To compare with other carla method, we do not use the T
 '''
 wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
 dataset = DS.give_me_some_credit
-alg = 'mlp'
+alg = 'gbm'
 results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results/'
 counterfactuals = 3
 
 tr_region = False
 DiCE_methods = ['genetic']
 
+tr_region = True
+DiCE_methods = []
 
 
 if tr_region:
@@ -32,16 +34,17 @@ if tr_region:
 else:
     tr = 'without trust region'
 
-if actionability:
-    a = 'with extra actionability constraints'
-else:
-    a = 'without extra actionability constraints'
 
 # extra actionability constraints can be included
 # for example age can only get larger, or some variables are integer, etc.
 # for now only available for the adult dataset
 actionability = False
 act = DS.adult_actionability
+
+if actionability:
+    a = 'with extra actionability constraints'
+else:
+    a = 'without extra actionability constraints'
 
 '''
 ---------DATA---------
