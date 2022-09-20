@@ -17,19 +17,15 @@ You need to change the model (alg).
 Use trust region or not? To compare with other carla method, we do not use the TR!  
 '''
 wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
-dataset = DS.adult
-act = DS.adult_actionability
-alg = 'rf'
-# DiCE_methods = ['random', 'genetic', 'kdtree']
-DiCE_methods = ['genetic']
-# results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results_carla/'
+dataset = DS.give_me_some_credit
+alg = 'mlp'
 results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results/'
-# tr_region = False
-# counterfactuals = 1
-# actionability = False
-tr_region = True
 counterfactuals = 3
-actionability = False
+
+tr_region = False
+DiCE_methods = ['genetic']
+
+
 
 if tr_region:
     tr = 'with trust region'
@@ -41,6 +37,11 @@ if actionability:
 else:
     a = 'without extra actionability constraints'
 
+# extra actionability constraints can be included
+# for example age can only get larger, or some variables are integer, etc.
+# for now only available for the adult dataset
+actionability = False
+act = DS.adult_actionability
 
 '''
 ---------DATA---------
@@ -74,7 +75,11 @@ F_b = df.columns.difference(numerical + [target])
 X = df.drop(target,axis=1)
 # X1: point in X that have 1 as label. They will be used as trust region.
 y_ix_1 = np.where(df[target]==1)
-X1 = X.iloc[y_ix_1[0],:].copy().reset_index(drop=True, inplace=False)
+if dataset.__name__ == 'give_me_some_credit':
+    X1 = X.iloc[y_ix_1[0],:].copy().reset_index(drop=True, inplace=False).iloc[:20000,:]
+else:
+    X1 = X.iloc[y_ix_1[0], :].copy().reset_index(drop=True, inplace=False)
+# X1 = X1.head(10000)
 
 sp = True
 mu = 10000
