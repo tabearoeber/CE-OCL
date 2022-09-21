@@ -151,3 +151,16 @@ DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (
 
  -----
 
+heloc 
+
+RF -- with trust region -- 1 counterfactual(s) -- without extra actionability constraints 
+
+ 	 Validity  	 Cat_prox 	 Cont_prox 	 Sparsity 	 Cat_diver 	 Cont_diver 	 Cont_count_divers 
+
+CE-OCL: 	 1.00 (0.00) 	 nan (nan) 	 -92.71 (13.75) 	 0.75 (0.02) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_random: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_genetic: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+DiCE_kdtree: 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 	 nan (nan) 
+
+ -----
+

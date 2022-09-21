@@ -16,17 +16,19 @@ You need to change the model (alg).
 
 Use trust region or not? To compare with other carla method, we do not use the TR!  
 '''
-wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
+wd = 'data/'
 dataset = DS.give_me_some_credit
+act = DS.adult_actionability
 alg = 'gbm'
-results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results/'
-counterfactuals = 3
-
-tr_region = False
-DiCE_methods = ['genetic']
-
-tr_region = True
+# DiCE_methods = ['random', 'genetic', 'kdtree']
 DiCE_methods = []
+# results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results_carla/'
+results_path = 'results/'
+# tr_region = False
+# counterfactuals = 1
+# actionability = False
+tr_region = True
+counterfactuals = 3
 
 
 if tr_region:
