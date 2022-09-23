@@ -14,7 +14,7 @@ import Datasets as DS
 
 wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
 alg = 'rf'
-dataset = DS.compas
+dataset = DS.adult
 results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results/'
 
 
@@ -44,22 +44,26 @@ cont_diver = {'FACE':[],'AR':[],'GrowingSpheres':[]}
 cont_count_divers = {'FACE':[],'AR':[],'GrowingSpheres':[]}
 
 for meth in methods:
-    for i in counterfactuals[meth].index:
-        original = pd.DataFrame(counterfactuals['factuals'].loc[i,:]).T
-        CEs = pd.DataFrame(counterfactuals[meth].loc[i,:]).T
+    print(meth)
 
-        df_orig = ce_helpers.visualise_changes(clf, d, encoder, method='CARLA',
-                                               factual=original, CEs=CEs, scaler=scaler, only_changes=False)
+    try:
+        for i in counterfactuals[meth].index:
+            original = pd.DataFrame(counterfactuals['factuals'].loc[i,:]).T
+            CEs = pd.DataFrame(counterfactuals[meth].loc[i,:]).T
 
-        df_performance_1 = ce_helpers.evaluation(df_orig, d)
+            df_orig = ce_helpers.visualise_changes(clf, d, encoder, method='CARLA',
+                                                   factual=original, CEs=CEs, scaler=scaler, only_changes=False)
 
-        validity[meth].append(df_performance_1.validity.item())
-        cat_prox[meth].append(df_performance_1.cat_prox.item())
-        cont_prox[meth].append(df_performance_1.cont_prox.item())
-        sparsity[meth].append(df_performance_1.sparsity.item())
-        cat_diver[meth].append(df_performance_1.cat_diver.item())
-        cont_diver[meth].append(df_performance_1.cont_diver.item())
-        cont_count_divers[meth].append(df_performance_1.cont_count_divers.item())
+            df_performance_1 = ce_helpers.evaluation(df_orig, d)
+
+            validity[meth].append(df_performance_1.validity.item())
+            cat_prox[meth].append(df_performance_1.cat_prox.item())
+            cont_prox[meth].append(df_performance_1.cont_prox.item())
+            sparsity[meth].append(df_performance_1.sparsity.item())
+            cat_diver[meth].append(df_performance_1.cat_diver.item())
+            cont_diver[meth].append(df_performance_1.cont_diver.item())
+            cont_count_divers[meth].append(df_performance_1.cont_count_divers.item())
+    except: continue
 
 # remove None values
 for key in validity.keys():
