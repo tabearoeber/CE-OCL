@@ -3,7 +3,7 @@ import pickle
 import os
 import opticl as oc
 import ce_helpers
-import sys
+# import sys
 
 
 def adult(wd, alg = 'rf'):
@@ -235,11 +235,6 @@ def heloc(wd, alg = 'rf'):
     return df, df_train, df_test, d, clf, df_factuals, model_master, encoder, scaler
 
 
-
-
-
-
-
 def compas(wd, alg = 'rf'):
     ## load data
     df = pd.read_csv(wd+'compas/dataset_carla_compas.csv')
@@ -335,44 +330,6 @@ def compas(wd, alg = 'rf'):
     model_master = pd.DataFrame(m)
 
     return df, df_train, df_test, d, clf, df_factuals, model_master, encoder, scaler
-
-
-
-def compas_actionability(df, d, encoder, u):
-    target = d['target']
-    numerical = d['numerical']
-    # categorical = d['categorical']
-
-    I = ['sex_Male', 'race_White']
-
-    ## for DiCE
-    factual = pd.DataFrame(u).T
-    permitted_ranges = {
-        'age': [factual['age'], df['age'].max()],  # age should only increase
-    }
-
-    F_b = df.columns.difference(numerical + [target])
-    feature_ranges = ce_helpers.get_features_range(df, numerical, F_b, permitted_ranges)[0]
-
-    features = df.drop(target, axis=1).columns
-    features_to_vary = [ele for ele in features if ele not in I]
-
-    # features that can only increase (become larger)
-    L = ['age']
-    # conditionally mutable features, such as education level (can only take on higher categories)
-    Pers_I = []
-    # features that can only be positive
-    P = numerical
-    # dictionary with one-hot encoding used to ensure coherence
-    F_coh = {}
-    # integer features
-    F_int = ['age']
-    # F_r
-    F_r = numerical
-
-    return L, Pers_I, P, F_coh, F_int, F_r, I, feature_ranges
-
-
 
 
 def give_me_some_credit(wd, alg = 'rf'):

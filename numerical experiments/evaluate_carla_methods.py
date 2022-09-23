@@ -12,10 +12,10 @@ import Datasets as DS
 
 
 
-wd = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/data/'
+wd = 'data/'
 alg = 'rf'
 dataset = DS.adult
-results_path = '/Users/tabearober/Documents/Counterfactuals/CE-OCL/results/'
+results_path = 'results/'
 
 
 '''
