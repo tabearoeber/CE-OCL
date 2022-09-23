@@ -1,0 +1,2 @@
+save_path,seed,cv_folds,task,parameters,best_params,valid_score,train_score,train_r2,test_score,test_r2,auc_train,auc_test,outcome,alg
+results/mlp/german_credit_v1_duration_model.csv,0,5,continuous,"{'hidden_layer_sizes': [(10,), (20,), (50,), (100,)]}","{'hidden_layer_sizes': (100,)}",-0.017651400534762267,0.01739157551354752,0.44060188793987376,0.020288389477787522,0.3799990633482907,,,duration,mlp
