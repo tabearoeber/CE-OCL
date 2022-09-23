@@ -2,7 +2,92 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="354c5e9d-a158-48f3-a449-6ad00b82f95f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CE-OCL Case Study.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CE-OCL Case Study -  Statlog (German Credit).ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CE-OCL Case Study - Statlog (Heart).ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CE-OCL_DiCE_results.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datasets.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ce_helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/constraint_learning.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/CARLA_counterfactuals_adult" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/CARLA_counterfactuals_adult.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/CART_adult.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/GBM_adult.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/LINEAR_adult.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/MLP_adult.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/RF_adult.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/cart_adult_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/dataset_carla_adult.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/encoder_adult" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/factuals_adult.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/gbm_adult_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/linear_adult_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/mlp_adult_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/rf_adult_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/scaler_adult" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/test_carla_adult.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/adult/train_carla_adult.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/CARLA_counterfactuals_compas" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/CART_compas.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/GBM_compas.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/LINEAR_compas.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/MLP_compas.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/RF_compas.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/cart_compas_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/dataset_carla_compas.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/encoder_compas" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/factuals_compas.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/gbm_compas_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/linear_compas_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/mlp_compas_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/rf_compas_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/scaler_compas" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/test_carla_compas.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/compas/train_carla_compas.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/credit-g_csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/diabetes.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/CARLA_counterfactuals_give_me_some_credit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/CART_give_me_some_credit.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/GBM_give_me_some_credit.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/LINEAR_give_me_some_credit.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/MLP_give_me_some_credit.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/RF_give_me_some_credit.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/cart_give_me_some_credit_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/dataset_carla_give_me_some_credit.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/encoder_give_me_some_credit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/factuals_give_me_some_credit.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/gbm_give_me_some_credit_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/linear_give_me_some_credit_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/mlp_give_me_some_credit_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/rf_give_me_some_credit_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/scaler_give_me_some_credit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/test_carla_give_me_some_credit.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/give_me_some_credit/train_carla_give_me_some_credit.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/CARLA_counterfactuals_heloc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/CART_heloc.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/GBM_heloc.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/LINEAR_heloc.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/MLP_heloc.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/RF_heloc.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/cart_heloc_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/dataset_carla_heloc.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/encoder_heloc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/factuals_heloc.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/gbm_heloc_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/linear_heloc_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/mlp_heloc_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/rf_heloc_model.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/scaler_heloc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/test_carla_heloc.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/heloc/train_carla_heloc.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/statlog.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/embed_mip.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate_carla_methods.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_MLmodels.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +107,34 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="CE-OCL_DiCE_results" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\dmaragn\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CE-OCL_DiCE_results.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.CE-OCL_DiCE_results" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
