@@ -1,2 +1,0 @@
-save_path,seed,cv_folds,task,parameters,best_params,valid_score,train_score,test_score,auc_train,auc_test,outcome,alg
-results/mlp/heart_v1_counterfactual_heart_model.csv,0,5,binary,"{'hidden_layer_sizes': [(10,), (20,), (50,), (100,)]}","{'hidden_layer_sizes': (50,)}",0.8865789473684209,1.0,0.8208333333333333,,,counterfactual_heart,mlp
