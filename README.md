@@ -1,10 +1,11 @@
 # CE-OCL
  
+Repo to reproduce results of the manuscript **Counterfactual Explanations Using Optimization With Constraint Learning**. 
  
  
  ## repo structure
      .
-    ├── case study/         
+    ├── case study/      # resources to reproduce results of the two case studies in Section 3 and Appendix D  
     |   ├── data/
     |   |   └── ...
     |   ├── results/
@@ -12,7 +13,7 @@
     |   ├── CE-OCL Case Study - Statlog (German Credit).ipynb
     |   └── CE-OCL Case Study - Statlog (Heart).ipynb
     |
-    ├── numerical experiments/     
+    ├── numerical experiments/     # resources to reproduce results of Section 3 and Appendix C
     |   ├── data/
     |   |   └── ...
     |   ├── results/
@@ -21,10 +22,10 @@
     |   ├── Datasets.py
     |   └── evaluate_carla_methods.py
     |
-    ├── src/   # helper functions needed for all notebooks
+    ├── src/   # source files and helper functions
     |   └── ...
     |   
-    ├── requiremsnts.txt
+    ├── requirements.txt
     └── README.md
 
 
