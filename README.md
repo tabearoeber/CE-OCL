@@ -4,17 +4,25 @@
  
  ## repo structure
      .
-    ├── data/         
-    |   └── ...
+    ├── case study/         
+    |   ├── data/
+    |   |   └── ...
+    |   ├── results/
+    |   |   └── ...
+    |   ├── CE-OCL Case Study - Statlog (German Credit).ipynb
+    |   └── CE-OCL Case Study - Statlog (Heart).ipynb
     |
-    ├── results/     # this directory will be automatically generated when running the notebooks
-    |   └── ...
+    ├── numerical experiments/     
+    |   ├── data/
+    |   |   └── ...
+    |   ├── results/
+    |   |   └── ...
+    |   ├── CE-OCL_DiCE_results.py
+    |   ├── Datasets.py
+    |   └── evaluate_carla_methods.py
     |
-    ├── ce_helpers.py   # helper functions needed for all notebooks
-    ├── embed_mip.py    # addition to OptiCL that allows for enlarged data manifold region
-    ├── CE-OCL Case Study.ipynb     # notebook to reproduce results of the case study (Section 4.1)
-    ├── Evaluation CE-OCL.ipynb     # notebook to reproduce results of Section 4.2 (for CE-OCL)
-    ├── Evaluation DiCE.ipynb       # notebook to reproduce results of Section 4.2 (for DiCE)
+    ├── src/   # helper functions needed for all notebooks
+    |   └── ...
     |   
     ├── requiremsnts.txt
     └── README.md
