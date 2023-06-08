@@ -57,13 +57,21 @@ def prep_data(X, y, numerical, one_hot_encoding=True, scaling=True):
     # get column names
     categorical_names = []
     if scaling and one_hot_encoding:
-        categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names(categorical))
+        # categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names(categorical))
+        try:
+            categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names(categorical))
+        except:
+            categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names_out(categorical))
         column_names = categorical_names + numerical
     elif scaling:
         categorical_names = list(categorical)
         column_names = categorical_names + numerical
     else:
-        categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names(categorical))
+        # categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names(categorical))
+        try:
+            categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names(categorical))
+        except:
+            categorical_names = list(data_pip['preprocessor'].transformers_[0][1].get_feature_names_out(categorical))
         column_names = categorical_names + numerical
 
     if data_pip['preprocessor'].sparse_output_:
@@ -148,7 +156,8 @@ def train_models(outcome_dict, version):
 
             perf.to_csv('results/%s/%s_%s_performance.csv' % (alg, version, outcome), index=False)
 
-            performance = performance.append(perf)
+            # performance = performance.append(perf)
+            performance = pd.concat([performance, perf], ignore_index=True)
             print()
     print('Saving the performance...')
     performance.to_csv('results/%s_performance.csv' % version, index=False)

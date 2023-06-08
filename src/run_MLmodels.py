@@ -225,10 +225,10 @@ def initialize_model(model_choice, task, cv_folds, parameter_grid, gs_metric, se
         }
         if task in ['binary', 'multiclass']:
             from sklearn.svm import LinearSVC
-            est = LinearSVC(max_iter=1e5, dual=False, penalty='l2')
+            est = LinearSVC(max_iter=int(1e5), dual=False, penalty='l2')
         elif task == 'continuous':
             from sklearn.svm import LinearSVR
-            est = LinearSVR(max_iter=1e5, dual=False, loss='squared_epsilon_insensitive')
+            est = LinearSVR(max_iter=int(1e5), dual=False, loss='squared_epsilon_insensitive')
         gs = GridSearchCV(estimator=est, param_grid=param_grid, scoring=gs_metric, cv=cv_folds)
 
     elif model_choice == "mlp":
