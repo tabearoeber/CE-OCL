@@ -239,7 +239,7 @@ def opt(X, X1, u, F_r, F_b, F_int, F_coh, I, L, Pers_I, P, sp, mu, tr_region, en
         vars_val_x = [suboptimal_solutions[i - 1] for i in vars_name_ix]
         solution_i = {X.columns[i]: vars_val_x[i] for i in range(len(vars_val_x))}
         solution_i = pd.DataFrame(solution_i, index=[0])
-        CEs = CEs.append(solution_i)
+        CEs = pd.concat([CEs, solution_i], ignore_index=True)
 
     CEs.reset_index(drop=True, inplace=True)
 
