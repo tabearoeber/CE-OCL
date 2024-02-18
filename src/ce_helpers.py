@@ -103,7 +103,7 @@ def prep_data(X, y, numerical, one_hot_encoding=True, scaling=True):
     return X, X_train, X_test, y_train_temp, y_test_temp, categorical_names, data_pip
 
 
-def train_models(outcome_dict, version):
+def train_models(outcome_dict, version = 'v1'):
     '''
     train the predictive models for each outcome.
     outcome_dict = dictionary containing for each outcome: the predictive models to train, the type of task,
@@ -164,7 +164,7 @@ def train_models(outcome_dict, version):
     print('Done!')
 
 
-def perf_trained_models(version, outcome_dict):
+def perf_trained_models(outcome_dict, version = 'v1'):
     performance = pd.read_csv('results/%s_performance.csv' % version)
     performance['task'] = 'continuous'
     for outcome in outcome_dict.keys():
