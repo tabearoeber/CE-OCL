@@ -369,6 +369,11 @@ def visualise_changes(clf, d, encoder=None, method = 'CE-OCL', CEs = None, CEs_ 
         # CEs_[d['target']] = clf.predict(CEs.drop('scaled_distance', axis=1))
         CEs_.loc['original', d['target']] = clf.predict(pd.DataFrame(CEs.drop('scaled_distance', axis=1).loc['original']).T)
         CEs_.loc['sol0':, d['target']] = abs(CEs_.loc['original', d['target']] - 1)
+        
+        # reverse scaling
+        if scaler is not None: 
+            CEs_[d['numerical']] = scaler.inverse_transform(CEs_[d['numerical']])
+
 
     # if we can specify an encoder, then we're dealing with one of the CARLA datasets
     if encoder is not None:
