@@ -394,6 +394,9 @@ def visualise_changes(clf, d, encoder=None, method = 'CE-OCL', CEs = None, CEs_ 
             df_orig[c] = df_orig.apply(lambda row: value_names(row, c), axis=1)
 
         # df_orig = df_orig.round(2)
+        if encoding_dict is not None: 
+            for column_name in encoding_dict.keys():
+                df_orig[column_name] = df_orig[column_name].map({str(idx): val for idx, val in enumerate(encoding_dict[column_name])})
 
     if only_changes:
         orig = df_orig[:1]
