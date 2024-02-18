@@ -323,7 +323,8 @@ def value_names(row, c):
 
 
 def visualise_changes(clf, d, encoder=None, method = 'CE-OCL', CEs = None, CEs_ = None,
-                      only_changes=False, exp = None, factual = None, scaler = None, F_coh = None):
+                      only_changes=False, exp = None, factual = None, scaler = None, F_coh = None,
+                      encoding_dict = None):
 
     if method == 'CARLA':
         if factual is None:
