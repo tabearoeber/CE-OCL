@@ -389,17 +389,17 @@ def run_model(train_x, y_train, test_x, y_test, model_choice, outcome, task, cv_
             tree.plot_tree(model,
                            feature_names=train_x.columns,
                            filled=True)
-            fig.savefig(save_path + '_tree.png')
+#            fig.savefig(save_path + '_tree.png')
             plt.clf()
             plt.close()
         elif model_choice == 'iai':
             df_A, node_info = extract_tree_info(model, train_x.columns, save_path)
             model.write_html(save_path + '_tree.html')
             model.write_png(save_path + '_tree.png')
-        elif model_choice == 'linear':
-            coef = pd.DataFrame(model.coef_.transpose(),
-                                columns=gs.classes_, index=train_x.columns)
-            coef.to_csv(save_path + "_coefficients.csv", index=True)
+#        elif model_choice == 'linear':
+#            coef = pd.DataFrame(model.coef_.transpose(),
+#                                columns=gs.classes_, index=train_x.columns)
+#            coef.to_csv(save_path + "_coefficients.csv", index=True)
         elif shap:
             shap_summary(model, train_x, train_x.columns, save_path)
 
