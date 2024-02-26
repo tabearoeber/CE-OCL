@@ -19,7 +19,7 @@ import embed_mip as em
 ######## PREPARATION ########
 
 
-def prep_data(X, y, numerical, one_hot_encoding=True, scaling=True):
+def prep_data(X, y, numerical, one_hot_encoding=True, scaling=True, drop=None):
     '''
     X: features, not processed
     y: outcome variable
@@ -39,13 +39,13 @@ def prep_data(X, y, numerical, one_hot_encoding=True, scaling=True):
     # create transformer
     if scaling and one_hot_encoding:
         transformations = ColumnTransformer(
-            transformers=[('cat', OneHotEncoder(handle_unknown='ignore'), categorical),
+            transformers=[('cat', OneHotEncoder(handle_unknown='ignore', drop=drop), categorical),
                           ('num', MinMaxScaler(), numerical)])
     elif scaling and not one_hot_encoding:
         transformations = ColumnTransformer(transformers=[('cat', 'passthrough', categorical),
                                                           ('num', MinMaxScaler(), numerical)])
     elif not scaling and one_hot_encoding:
-        transformations = ColumnTransformer(transformers=[('cat', OneHotEncoder(handle_unknown='ignore'), categorical),
+        transformations = ColumnTransformer(transformers=[('cat', OneHotEncoder(handle_unknown='ignore', drop=drop), categorical),
                                                           ('num', 'passthrough', numerical)])
 
     # create processing pipeline
