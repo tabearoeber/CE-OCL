@@ -82,7 +82,8 @@ class ConstraintLearning(object):
             data = np.delete(self.__data, datapoint, axis=0)
             result = self.opt_data_reduction(datapoint[0], data)
             if result:
-                data_reduced.append(datapoint)
+                # data_reduced.append(datapoint)
+                data_reduced = pd.concat([data_reduced, datapoint], ignore_index=True)
             c += 1
         return data_reduced
 
@@ -98,7 +99,8 @@ class ConstraintLearning(object):
         if class_c in ['continuous','binary']:
             for node in range(1, num_nodes + 1):
                 if self.__learner.is_leaf(node_index=node):
-                    leaf_nodes.append(node)
+                    # leaf_nodes.append(node)
+                    leaf_nodes = pd.concat([leaf_nodes, node], ignore_index=True)
         # else:
         #     for node in range(1, num_nodes + 1):
         #         if self.__learner.is_leaf(node_index=node):
@@ -157,7 +159,8 @@ class ConstraintLearning(object):
                 elif class_c == 'multiclass':
                     print('Under Development')
 
-                constraints = constraints.append(constraint)
+                # constraints = constraints.append(constraint)
+                constraints = pd.concat([constraints, constraint], ignore_index=True)
 
                 node = parent_node
                 # check if the parent_node is a root node
@@ -204,7 +207,8 @@ class ConstraintLearning(object):
                     constraint[column_names[feature[node]]] = -1
                     constraint['threshold'] = -(threshold[node] + 0.000001)
                 constraint['ID'] = ID
-                constraints_leaf = constraints_leaf.append(constraint)
+                # constraints_leaf = constraints_leaf.append(constraint)
+                constraints_leaf = pd.concat([constraints_leaf, constraint], ignore_index=True)
         return constraints_leaf
 
     def constraint_extrapolation_skTree(self, class_c):
@@ -239,7 +243,8 @@ class ConstraintLearning(object):
                 # for i, class_name in enumerate(columns_classes):
                 #     constraints_leaf[class_name] = self.__learner.tree_.value[leaf][0, i]/sum(self.__learner.tree_.value[leaf][0])
                 print('Under Development')
-            constraints = constraints.append(constraints_leaf)
+            # constraints = constraints.append(constraints_leaf)
+            constraints = pd.concat([constraints, constraints_leaf], ignore_index=True)
 
         return constraints
 
@@ -283,7 +288,8 @@ class ConstraintLearning(object):
                     # for i, class_name in enumerate(columns_classes):
                     #     constraints_leaf[class_name] = self.__learner.tree_.value[leaf][0, i]/sum(self.__learner.tree_.value[leaf][0])
                     print('Under Development')
-                constraints = constraints.append(constraints_leaf)
+                # constraints = constraints.append(constraints_leaf)
+                constraints = pd.concat([constraints, constraints_leaf], ignore_index=True)
 
         return constraints
 
@@ -314,7 +320,8 @@ class ConstraintLearning(object):
                     constraints_leaf['prediction'] = tree.tree_.value[leaf].item()
                     constraints_leaf['initial_prediction'] = 0
                     constraints_leaf['learning_rate'] = self.__learner.learning_rate
-                constraints = constraints.append(constraints_leaf)
+                # constraints = constraints.append(constraints_leaf)
+                constraints = pd.concat([constraints, constraints_leaf], ignore_index=True)
         return constraints
 
     def constraint_extrapolation_skEN(self, class_c):
