@@ -30,11 +30,17 @@ def prep_data(X, y, numerical, one_hot_encoding=True, scaling=True, drop=None):
     F_r = numerical
 
     # train/test split
-    X_train_temp, X_test_temp, y_train_temp, y_test_temp = train_test_split(X,
+    if y.nunique() == 2:
+        X_train_temp, X_test_temp, y_train_temp, y_test_temp = train_test_split(X,
+                                                                                y,
+                                                                                test_size=0.2,
+                                                                                random_state=0,
+                                                                                stratify=y)  # this has to be changed
+    else:
+        X_train_temp, X_test_temp, y_train_temp, y_test_temp = train_test_split(X,
                                                                             y,
                                                                             test_size=0.2,
-                                                                            random_state=0,
-                                                                            stratify=y)  # this has to be changed
+                                                                            random_state=0)
 
     # create transformer
     if scaling and one_hot_encoding:
@@ -369,6 +375,7 @@ def visualise_changes(clf, d, encoder=None, method = 'CE-OCL', CEs = None, CEs_ 
         # CEs_[d['target']] = clf.predict(CEs.drop('scaled_distance', axis=1))
         CEs_.loc['original', d['target']] = clf.predict(pd.DataFrame(CEs.drop('scaled_distance', axis=1).loc['original']).T)
         CEs_.loc['sol0':, d['target']] = abs(CEs_.loc['original', d['target']] - 1)
+        CEs_.loc['sol0':, d['target']] = clf.predict([CEs.drop('scaled_distance', axis=1).iloc[1,:]])[0]
         
         # reverse scaling
         if scaler is not None: 
